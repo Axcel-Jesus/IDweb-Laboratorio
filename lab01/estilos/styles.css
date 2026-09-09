@@ -84,6 +84,11 @@ div.tabla .imagen img {
     height: 100%;
     object-fit: cover;
 }
+div.tabla .imagen video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 div {
     width: 80%;
     text-align: center;
