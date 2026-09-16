@@ -13,6 +13,8 @@ padding: 20px;
 margin-bottom: 15px;
 width: 100%;
 max-width: 400px;
+padding: 0 15px;
+margin: 0 auto;
 }
 .form-label {
 display: block;
@@ -36,4 +38,22 @@ box-shadow: 0 0 5px rgba(49, 130, 206, 0.5);
 }
 .form-input:invalid:touched {
 border-color: #e53e3e;
+}
+input[type="radio"] {
+    display: inline-block;
+    margin-right: 5px;
+}
+legend {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }

@@ -9,11 +9,42 @@
 <body>
     <form action="/procesar" method="POST" class="form-container">
         <fieldset>
-        <legend>Datos de Acceso</legend>
+        <legend>Registro de estudiante</legend>
             <div class="form-group">
             <label for="email" class="form-label">Correo Institucional:</label>
             <input type="email" id="email" name="email" class="form-input"
             required placeholder="usuario@universidad.edu.pe">
+            <label for="name" class="form-name">Nombre:</label>
+            <input type="text" id="name" name="name" class="form-input" required placeholder="Ingrese su nombre">
+            <label for="lastname" class="form-lastname">Apellido:</label>
+            <input type="text" id="lastname" name="lastname" class="form-input" required placeholder="Ingrese su apellido">
+            <label for="age" class="form-age">Edad:</label>
+            <input type="number" id="age" name="age" class="form-input" required placeholder="Ingrese su edad" min="10" max="50">
+            <label for="CUI" class="form-CUI">CUI:</label>
+            <input type="text" id="CUI" name="CUI" class="form-input" placeholder="Ingrese su CUI" pattern="[0-9]{8}" required>
+            <label for="career" class="form-career">Carrera:</label>
+            <select id="career" name="career" class="form-input" required>
+                <option value="">Seleccione su carrera</option>
+                <option value="Ingeniería de Sistemas">Ingeniería de Sistemas</option>
+                <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+                <option value="Administración de Empresas">Administración de Empresas</option>
+                <option value="Contabilidad">Contabilidad</option>
+                <option value="Derecho">Derecho</option>
+            </select>
+            <label for="contraseña" class="form-password">Contraseña:</label>
+            <input type="password" id="contraseña" name="contraseña" class="form-input" pattern="(?=.*[A-Za-z])(?=.*\d)(?=.*[0-9]).{5,}" required placeholder="Ingrese su contraseña">
+            <label for="turno" class="form-turno">Turno:</label>
+            <input type="radio" id="mañana" name="turno" value="1" class="form-input" required>
+            <label for="mañana" class="form-label">Mañana</label>
+            <input type="radio" id="tarde" name="turno" value="2" class="form-input" required>
+            <label for="tarde" class="form-label">Tarde</label>
+            <input type="radio" id="noche" name="turno" value="3" class="form-input" required>
+            <label for="noche" class="form-label">Noche</label>
+            <label for="comentarios" class="form-comentarios">Comentarios:</label>
+            <textarea id="comentarios" name="comentarios" class="form-input" placeholder="Ingrese sus comentarios"></textarea>
+            <label for="tyc" class="form-tyc">Acepto los términos y condiciones:</label>
+            <input type="checkbox" id="tyc" name="tyc" class="form-input" required>
+            <button type="submit" class="form-button">Registrar</button>
             </div>
         </fieldset>
     </form>
