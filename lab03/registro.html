@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Registro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
-<body>
-    <!-- Integración de Navbar de Bootstrap 5 -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">Portal Académico</a>
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
@@ -27,6 +24,76 @@
             </div>
         </div>
     </nav>
+
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4 p-lg-5">
+                        <h2 class="text-center mb-4">Registro</h2>
+
+                        <form id="registroForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="nombres" class="form-label">Nombres</label>
+                                    <input type="text" class="form-control" id="nombres" name="nombres" required>
+                                    <div class="invalid-feedback">Ingresa tus nombres.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="apellidos" class="form-label">Apellidos</label>
+                                    <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+                                    <div class="invalid-feedback">Ingresa tus apellidos.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="dni" class="form-label">DNI</label>
+                                    <input type="text" class="form-control" id="dni" name="dni" inputmode="numeric" pattern="[0-9]{8}" maxlength="8" required>
+                                    <div class="invalid-feedback">El DNI debe tener 8 dígitos numéricos.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
+                                    <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required min="1900-01-01" max="2015-12-31">
+                                    <div class="invalid-feedback">Selecciona una fecha válida (mínimo 1900 y máximo 2015).</div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="correo" class="form-label">Correo electrónico</label>
+                                    <input type="email" class="form-control" id="correo" name="correo" required>
+                                    <div class="invalid-feedback">Ingresa un correo válido.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="password" class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control" id="password" name="password" required minlength="5" pattern="(?=.*[a-z])(?=.*[A-Z]).{5,}">
+                                    <div class="invalid-feedback">La contraseña debe tener al menos 5 caracteres, una mayúscula, una minúscula y un número.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="confirmPassword" class="form-label">Repetir contraseña</label>
+                                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required minlength="5" pattern="(?=.*[a-z])(?=.*[A-Z]).{5,}">
+                                    <div class="invalid-feedback">La contraseña debe tener al menos 5 caracteres, una mayúscula, una minúscula y un número.</div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="terminos" name="terminos" required>
+                                        <label class="form-check-label" for="terminos">
+                                            Acepto los términos y condiciones
+                                        </label>
+                                        <div class="invalid-feedback">Debes aceptar los términos y condiciones.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 mt-4">Registrarse</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"></script>
 </body>
