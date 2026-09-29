@@ -3,8 +3,8 @@ const form = document.querySelector('#todo-form');
 const titleInput = document.querySelector('#todo-title');
 const courseInput = document.querySelector('#todo-course');
 const dateInput = document.querySelector('#todo-date');
-const completedInput = document.querySelector('#todo-completed');
 const list = document.querySelector('#todo-list');
+const filterSelect = document.querySelector('#todo-filter');
 const alerts = document.querySelector('#todo-alerts');
 const todoModal = new bootstrap.Modal(document.querySelector('#todo-modal'));
 
@@ -58,20 +58,42 @@ function showValidationErrors(errors) {
 }
 
 function renderTasks() {
-    const taskElements = tasks.map((task) => {
+    const selectedFilter = filterSelect.value;
+    const visibleTasks = tasks.filter((task) => {
+        if (selectedFilter === 'pending') return !task.completada;
+        if (selectedFilter === 'completed') return task.completada;
+        return true;
+    });
+
+    if (visibleTasks.length === 0) {
+        const emptyMessage = document.createElement('li');
+        emptyMessage.className = 'list-group-item text-muted';
+        emptyMessage.textContent = tasks.length === 0
+            ? 'Aún no hay tareas.'
+            : 'No hay tareas en esta categoría.';
+        list.replaceChildren(emptyMessage);
+        return;
+    }
+
+    const taskElements = visibleTasks.map((task) => {
         const li = document.createElement('li');
         li.className = 'list-group-item d-flex justify-content-between align-items-center gap-3';
 
         const details = document.createElement('div');
         details.className = 'd-flex align-items-start gap-2';
 
-        const completed = document.createElement('input');
-        completed.type = 'checkbox';
-        completed.className = 'form-check-input mt-1';
-        completed.checked = task.completada;
-        completed.dataset.action = 'toggle';
-        completed.dataset.id = task.id;
-        completed.setAttribute('aria-label', `Marcar ${task.titulo} como completada`);
+        const statusButton = document.createElement('button');
+        statusButton.type = 'button';
+        statusButton.className = task.completada
+            ? 'btn btn-success btn-sm flex-shrink-0'
+            : 'btn btn-warning btn-sm flex-shrink-0';
+        statusButton.textContent = task.completada ? 'Terminado' : 'Pendiente';
+        statusButton.dataset.action = 'toggle';
+        statusButton.dataset.id = task.id;
+        statusButton.setAttribute(
+            'aria-label',
+            task.completada ? `Marcar ${task.titulo} como pendiente` : `Marcar ${task.titulo} como terminado`
+        );
 
         const text = document.createElement('div');
         const title = document.createElement('strong');
@@ -83,7 +105,7 @@ function renderTasks() {
         metadata.textContent = `Curso: ${task.curso} | Entrega: ${task.fechaEntrega || 'No indicada'}`;
 
         text.append(title, metadata);
-        details.append(completed, text);
+        details.append(statusButton, text);
 
         const deleteButton = document.createElement('button');
         deleteButton.type = 'button';
@@ -122,7 +144,7 @@ form.addEventListener('submit', (e) => {
         titulo: titleInput.value.trim(),
         curso: courseInput.value.trim(),
         fechaEntrega: dateInput.value,
-        completada: completedInput.checked
+        completada: false
     });
     saveTasks();
     form.reset();
@@ -131,24 +153,25 @@ form.addEventListener('submit', (e) => {
 });
 
 list.addEventListener('click', (e) => {
-    const button = e.target.closest('[data-action="delete"]');
+    const button = e.target.closest('[data-action]');
     if (!button) return;
 
-    tasks = tasks.filter((task) => String(task.id) !== button.dataset.id);
-    saveTasks();
-    renderTasks();
-});
-
-list.addEventListener('change', (e) => {
-    if (e.target.dataset.action !== 'toggle') return;
-
-    const task = tasks.find((item) => String(item.id) === e.target.dataset.id);
+    const task = tasks.find((item) => String(item.id) === button.dataset.id);
     if (!task) return;
 
-    task.completada = e.target.checked;
+    if (button.dataset.action === 'toggle') {
+        task.completada = !task.completada;
+    } else if (button.dataset.action === 'delete') {
+        tasks = tasks.filter((item) => String(item.id) !== button.dataset.id);
+    } else {
+        return;
+    }
+
     saveTasks();
     renderTasks();
 });
+
+filterSelect.addEventListener('change', renderTasks);
 
 document.addEventListener('DOMContentLoaded', renderTasks);
 document.querySelector('#todo-modal').addEventListener('show.bs.modal', clearValidationErrors);
