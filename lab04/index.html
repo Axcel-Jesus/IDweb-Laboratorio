@@ -36,38 +36,76 @@
 
                 <div class="card-body">
 
-                    <!-- Formulario -->
-                    <form id="todo-form" class="mb-4">
-
-                        <div class="input-group">
-                            <input
-                                type="text"
-                                id="todo-input"
-                                class="form-control"
-                                placeholder="Ingrese una nueva tarea"
-                                autocomplete="off"
-                            >
-
-                            <button
-                                type="submit"
-                                class="btn btn-primary">
-                                Agregar
-                            </button>
-                        </div>
-
-                    </form>
+                    <button
+                        type="button"
+                        class="btn btn-primary mb-4"
+                        data-bs-toggle="modal"
+                        data-bs-target="#todo-modal"
+                    >
+                        Agregar tarea
+                    </button>
 
                     <!-- Lista de tareas -->
                     <h2 class="h5 mb-3">
                         Lista de tareas
                     </h2>
 
-                    <ul
-                        id="todo-list"
-                        class="list-group"
-                    >
-                    </ul>
+                    <ul id="todo-list" class="list-group"></ul>
 
+                </div>
+
+                <div class="modal fade" id="todo-modal" tabindex="-1" aria-labelledby="todo-modal-title" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <form id="todo-form">
+                                <div class="modal-header">
+                                    <h2 class="modal-title fs-5" id="todo-modal-title">Nueva tarea</h2>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="todo-title" class="form-label">Título</label>
+                                        <input
+                                            type="text"
+                                            id="todo-title"
+                                            class="form-control"
+                                            placeholder="Ej. Entregar informe"
+                                            autocomplete="off"
+                                            required
+                                        >
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="todo-course" class="form-label">Curso</label>
+                                        <input
+                                            type="text"
+                                            id="todo-course"
+                                            class="form-control"
+                                            placeholder="Ej. Desarrollo Web"
+                                            autocomplete="off"
+                                            required
+                                        >
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="todo-date" class="form-label">Fecha de entrega</label>
+                                        <input type="date" id="todo-date" class="form-control" required>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input type="checkbox" id="todo-completed" class="form-check-input">
+                                        <label for="todo-completed" class="form-check-label">Completada</label>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar tarea</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -78,6 +116,7 @@
 </div>
 
 <!-- JavaScript de la aplicación -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="app.js"></script>
 
 
