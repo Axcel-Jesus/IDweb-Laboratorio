@@ -57,13 +57,15 @@
                 <div class="modal fade" id="todo-modal" tabindex="-1" aria-labelledby="todo-modal-title" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
-                            <form id="todo-form">
+                            <form id="todo-form" novalidate>
                                 <div class="modal-header">
                                     <h2 class="modal-title fs-5" id="todo-modal-title">Nueva tarea</h2>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                                 </div>
 
                                 <div class="modal-body">
+                                    <div id="todo-alerts" class="alert alert-danger d-none" role="alert" aria-live="assertive"></div>
+
                                     <div class="mb-3">
                                         <label for="todo-title" class="form-label">Título</label>
                                         <input
@@ -78,14 +80,20 @@
 
                                     <div class="mb-3">
                                         <label for="todo-course" class="form-label">Curso</label>
-                                        <input
-                                            type="text"
-                                            id="todo-course"
-                                            class="form-control"
-                                            placeholder="Ej. Desarrollo Web"
-                                            autocomplete="off"
-                                            required
-                                        >
+                                        <select id="todo-course" class="form-select" required>
+                                            <option value="" selected disabled>Selecciona un curso</option>
+                                            <option value="Introducción Web">Introducción Web</option>
+                                            <option value="Introducción a la programación">Introducción a la programación</option>
+                                            <option value="Cálculo en varias variables">Cálculo en varias variables</option>
+                                            <option value="Taller de liderazgo">Taller de liderazgo</option>
+                                            <option value="Algoritmos y estructuras de datos">Algoritmos y estructuras de datos</option>
+                                            <option value="Bases de datos">Bases de datos</option>
+                                            <option value="Redes y comunicación de datos">Redes y comunicación de datos</option>
+                                            <option value="Sistemas operativos">Sistemas operativos</option>
+                                            <option value="Ingeniería de software">Ingeniería de software</option>
+                                            <option value="Arquitectura de computadoras">Arquitectura de computadoras</option>
+                                            <option value="Inteligencia artificial">Inteligencia artificial</option>
+                                        </select>
                                     </div>
 
                                     <div class="mb-3">

@@ -5,6 +5,7 @@ const courseInput = document.querySelector('#todo-course');
 const dateInput = document.querySelector('#todo-date');
 const completedInput = document.querySelector('#todo-completed');
 const list = document.querySelector('#todo-list');
+const alerts = document.querySelector('#todo-alerts');
 const todoModal = new bootstrap.Modal(document.querySelector('#todo-modal'));
 
 function loadTasks() {
@@ -28,6 +29,32 @@ let tasks = loadTasks();
 
 function saveTasks() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function getTodayDate() {
+    const today = new Date();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${today.getFullYear()}-${month}-${day}`;
+}
+
+function clearValidationErrors() {
+    alerts.replaceChildren();
+    alerts.classList.add('d-none');
+}
+
+function showValidationErrors(errors) {
+    const errorList = document.createElement('ul');
+    errorList.className = 'mb-0';
+
+    errors.forEach((message) => {
+        const item = document.createElement('li');
+        item.textContent = message;
+        errorList.appendChild(item);
+    });
+
+    alerts.replaceChildren(errorList);
+    alerts.classList.remove('d-none');
 }
 
 function renderTasks() {
@@ -74,6 +101,22 @@ function renderTasks() {
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
+
+    const errors = [];
+    if (!titleInput.value.trim()) errors.push('Ingresa el título de la tarea.');
+    if (!courseInput.value.trim()) errors.push('Ingresa el curso de la tarea.');
+    if (!dateInput.value) {
+        errors.push('Selecciona la fecha de entrega.');
+    } else if (dateInput.value <= getTodayDate()) {
+        errors.push('La fecha de entrega debe ser posterior a la fecha actual.');
+    }
+
+    if (errors.length > 0) {
+        showValidationErrors(errors);
+        return;
+    }
+
+    clearValidationErrors();
     tasks.push({
         id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`,
         titulo: titleInput.value.trim(),
@@ -108,3 +151,4 @@ list.addEventListener('change', (e) => {
 });
 
 document.addEventListener('DOMContentLoaded', renderTasks);
+document.querySelector('#todo-modal').addEventListener('show.bs.modal', clearValidationErrors);
