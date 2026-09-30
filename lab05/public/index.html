@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 05</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <main class="welcome">
+        <h1>Bienvenido al Lab 05</h1>
+        <p>Una página sencilla servida desde nuestro servidor con Node.js.</p>
+        <p class="clock-label">La hora actual es</p>
+        <time id="current-time" class="clock">--:--:--</time>
+    </main>
+
+    <script>
+        const clock = document.querySelector('#current-time');
+
+        function updateClock() {
+            const now = new Date();
+            clock.dateTime = now.toISOString();
+            clock.textContent = now.toLocaleTimeString('es-PE');
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>

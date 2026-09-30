@@ -1,0 +1,66 @@
+:root {
+    font-family: Arial, sans-serif;
+    color: #25332d;
+    background: #f4f6f4;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    place-items: center;
+}
+
+.welcome {
+    width: min(100% - 40px, 560px);
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+h1 {
+    max-width: none;
+    margin: 0 0 12px;
+    color: #25332d;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.welcome p {
+    margin: 0;
+    color: #5d6b63;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.welcome .clock-label {
+    margin-top: 28px;
+    font-size: 14px;
+}
+
+.clock {
+    display: block;
+    margin-top: 4px;
+    color: #176b52;
+    font-size: 32px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 30px;
+    }
+
+    .welcome p {
+        font-size: 15px;
+    }
+}
