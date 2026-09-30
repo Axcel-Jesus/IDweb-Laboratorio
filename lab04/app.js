@@ -8,11 +8,13 @@ const filterSelect = document.querySelector('#todo-filter');
 const alerts = document.querySelector('#todo-alerts');
 const todoModal = new bootstrap.Modal(document.querySelector('#todo-modal'));
 
+// Recupera las tareas guardadas y normaliza los datos de versiones anteriores.
 function loadTasks() {
     try {
         const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
         if (!Array.isArray(savedTasks)) return [];
 
+        // Asegura que cada tarea tenga todos los atributos esperados.
         return savedTasks.map((task, index) => ({
             id: task.id ?? `${Date.now()}-${index}`,
             titulo: task.titulo ?? task.text ?? '',
@@ -27,10 +29,12 @@ function loadTasks() {
 
 let tasks = loadTasks();
 
+// Guarda el arreglo actualizado de tareas en el almacenamiento del navegador.
 function saveTasks() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
+// Devuelve la fecha de hoy en el formato requerido por los campos date.
 function getTodayDate() {
     const today = new Date();
     const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -38,15 +42,18 @@ function getTodayDate() {
     return `${today.getFullYear()}-${month}-${day}`;
 }
 
+// Oculta y limpia los mensajes de validación anteriores.
 function clearValidationErrors() {
     alerts.replaceChildren();
     alerts.classList.add('d-none');
 }
 
+// Muestra los errores recibidos como una lista dentro del área de alertas.
 function showValidationErrors(errors) {
     const errorList = document.createElement('ul');
     errorList.className = 'mb-0';
 
+    // Crea un elemento de lista por cada error de validación.
     errors.forEach((message) => {
         const item = document.createElement('li');
         item.textContent = message;
@@ -57,8 +64,10 @@ function showValidationErrors(errors) {
     alerts.classList.remove('d-none');
 }
 
+// Filtra las tareas según el estado seleccionado y actualiza el DOM.
 function renderTasks() {
     const selectedFilter = filterSelect.value;
+    // Conserva las tareas que coinciden con el filtro actual.
     const visibleTasks = tasks.filter((task) => {
         if (selectedFilter === 'pending') return !task.completada;
         if (selectedFilter === 'completed') return task.completada;
@@ -75,6 +84,7 @@ function renderTasks() {
         return;
     }
 
+    // Construye los elementos visuales de cada tarea visible.
     const taskElements = visibleTasks.map((task) => {
         const li = document.createElement('li');
         li.className = 'list-group-item d-flex justify-content-between align-items-center gap-3';
@@ -121,6 +131,7 @@ function renderTasks() {
     list.replaceChildren(...taskElements);
 }
 
+// Valida y guarda la tarea cuando se envía el formulario.
 form.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -152,16 +163,19 @@ form.addEventListener('submit', (e) => {
     todoModal.hide();
 });
 
+// Cambia el estado de una tarea o la elimina al pulsar sus botones.
 list.addEventListener('click', (e) => {
     const button = e.target.closest('[data-action]');
     if (!button) return;
 
+    // Localiza la tarea asociada al botón pulsado.
     const task = tasks.find((item) => String(item.id) === button.dataset.id);
     if (!task) return;
 
     if (button.dataset.action === 'toggle') {
         task.completada = !task.completada;
     } else if (button.dataset.action === 'delete') {
+        // Elimina del arreglo la tarea seleccionada.
         tasks = tasks.filter((item) => String(item.id) !== button.dataset.id);
     } else {
         return;
@@ -171,7 +185,10 @@ list.addEventListener('click', (e) => {
     renderTasks();
 });
 
+// Vuelve a dibujar la lista cuando cambia el filtro.
 filterSelect.addEventListener('change', renderTasks);
 
+// Dibuja las tareas guardadas cuando el documento termina de cargar.
 document.addEventListener('DOMContentLoaded', renderTasks);
+// Limpia errores anteriores cada vez que se abre el formulario modal.
 document.querySelector('#todo-modal').addEventListener('show.bs.modal', clearValidationErrors);
