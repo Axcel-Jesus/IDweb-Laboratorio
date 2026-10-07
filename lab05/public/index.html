@@ -3,28 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 05</title>
+    <title>Lista de estudiantes</title>
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <main class="welcome">
-        <h1>Bienvenido al Lab 05</h1>
-        <p>Una página sencilla servida desde nuestro servidor con Node.js.</p>
-        <p class="clock-label">La hora actual es</p>
-        <time id="current-time" class="clock">--:--:--</time>
+    <main class="student-page">
+        <h1>Estudiantes</h1>
+
+        <form id="student-form" class="student-form">
+            <label class="visually-hidden" for="student-name">Nombre del estudiante</label>
+            <input id="student-name" name="student" type="text" placeholder="Nombre del estudiante" autocomplete="off" required>
+            <button type="submit">Agregar</button>
+        </form>
+
+        <ul id="student-list" class="student-list" aria-label="Lista de estudiantes"></ul>
     </main>
-
-    <script>
-        const clock = document.querySelector('#current-time');
-
-        function updateClock() {
-            const now = new Date();
-            clock.dateTime = now.toISOString();
-            clock.textContent = now.toLocaleTimeString('es-PE');
-        }
-
-        updateClock();
-        setInterval(updateClock, 1000);
-    </script>
+    <script src="/app.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 :root {
     font-family: Arial, sans-serif;
-    color: #25332d;
-    background: #f4f6f4;
+    color: #24332b;
+    background: #f3f6f3;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
 }
@@ -15,52 +15,117 @@ body {
     min-width: 320px;
     min-height: 100vh;
     margin: 0;
+    padding: 24px;
     place-items: center;
 }
 
-.welcome {
-    width: min(100% - 40px, 560px);
-    margin: 0;
-    padding: 0;
-    text-align: center;
+.student-page {
+    width: min(100%, 480px);
 }
 
 h1 {
-    max-width: none;
-    margin: 0 0 12px;
-    color: #25332d;
-    font-size: 36px;
+    margin: 0 0 20px;
+    font-size: 30px;
     font-weight: 600;
-    line-height: 1.2;
 }
 
-.welcome p {
+.student-form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.student-form input {
+    flex: 1;
+    min-width: 0;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #bdc9c0;
+    border-radius: 5px;
+    background: #fff;
+    color: inherit;
+    font: inherit;
+}
+
+.student-form input:focus {
+    border-color: #267453;
+    outline: 2px solid #267453;
+    outline-offset: 1px;
+}
+
+.student-form button,
+.delete-button {
+    min-height: 40px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 5px;
+    font: inherit;
+    cursor: pointer;
+}
+
+.student-form button {
+    background: #267453;
+    color: #fff;
+}
+
+.student-form button:hover {
+    background: #1d5f43;
+}
+
+.student-list {
+    display: grid;
+    gap: 8px;
     margin: 0;
-    color: #5d6b63;
-    font-size: 16px;
-    line-height: 1.6;
+    padding: 0;
+    list-style: none;
 }
 
-.welcome .clock-label {
-    margin-top: 28px;
-    font-size: 14px;
+.student-list li {
+    display: flex;
+    min-height: 50px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 8px 6px 14px;
+    border: 1px solid #d8e1da;
+    border-radius: 5px;
+    background: #fff;
 }
 
-.clock {
-    display: block;
-    margin-top: 4px;
-    color: #176b52;
-    font-size: 32px;
-    font-variant-numeric: tabular-nums;
-    font-weight: 600;
+.student-name {
+    overflow-wrap: anywhere;
 }
 
-@media (max-width: 480px) {
-    h1 {
-        font-size: 30px;
+.delete-button {
+    flex: 0 0 auto;
+    background: #f8e8e6;
+    color: #9b352d;
+}
+
+.delete-button:hover {
+    background: #f0d5d1;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    clip-path: inset(50%);
+}
+
+@media (max-width: 420px) {
+    body {
+        padding: 20px 16px;
     }
 
-    .welcome p {
-        font-size: 15px;
+    h1 {
+        font-size: 26px;
+    }
+
+    .student-form button {
+        padding: 0 11px;
     }
 }
