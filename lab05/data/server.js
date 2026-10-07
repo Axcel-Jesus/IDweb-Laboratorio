@@ -57,16 +57,16 @@ function serveStaticFile(req, res) {
     const requestedPath = pathname === '/' ? '/index.html' : pathname;
     const filePath = path.resolve(publicDir, `.${requestedPath}`);
     if (filePath !== publicDir && !filePath.startsWith(`${publicDir}${path.sep}`)) {
-        res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
-        res.end('Acceso denegado');
+        sendJson(res, 404, { message: 'Recurso no encontrado' });
         return;
     }
 
     fs.readFile(filePath, (err, content) => {
         if (err) {
             const statusCode = err.code === 'ENOENT' ? 404 : 500;
-            res.writeHead(statusCode, { 'Content-Type': 'text/plain; charset=utf-8' });
-            res.end(statusCode === 404 ? 'Archivo no encontrado' : 'Error interno del servidor');
+            sendJson(res, statusCode, {
+                message: statusCode === 404 ? 'Recurso no encontrado' : 'Error interno del servidor'
+            });
             return;
         }
 
@@ -130,8 +130,7 @@ const server = http.createServer((req, res) => {
     } else if (req.method === 'GET') {
         serveStaticFile(req, res);
     } else {
-        res.writeHead(405, { 'Content-Type': 'text/plain; charset=utf-8' });
-        res.end('Método no permitido');
+        sendJson(res, 404, { message: 'Recurso no encontrado' });
     }
 });
 

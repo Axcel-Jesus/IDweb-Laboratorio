@@ -1,26 +1,7 @@
 const form = document.querySelector('#student-form');
 const nameInput = document.querySelector('#student-name');
 const studentList = document.querySelector('#student-list');
-const starterList = [
-    { id: 'student-1', name: 'Ana Torres' },
-    { id: 'student-2', name: 'Luis Mendoza' },
-    { id: 'student-3', name: 'Camila Rojas' }
-];
-
-function loadStudents() {
-    try {
-        const storedStudents = JSON.parse(localStorage.getItem('students'));
-        return Array.isArray(storedStudents) ? storedStudents : starterList;
-    } catch {
-        return starterList;
-    }
-}
-
-let list = loadStudents();
-
-function saveStudents() {
-    localStorage.setItem('students', JSON.stringify(list));
-}
+let list = [];
 
 function renderStudents() {
     if (list.length === 0) {
@@ -50,25 +31,58 @@ function renderStudents() {
     studentList.replaceChildren(...studentItems);
 }
 
-form.addEventListener('submit', (event) => {
+async function loadStudents() {
+    try {
+        const response = await fetch('/api/estudiantes');
+        if (!response.ok) throw new Error('No se pudo cargar la lista.');
+
+        list = await response.json();
+        renderStudents();
+    } catch {
+        const errorMessage = document.createElement('li');
+        errorMessage.textContent = 'No se pudo conectar con el servidor.';
+        studentList.replaceChildren(errorMessage);
+    }
+}
+
+form.addEventListener('submit', async (event) => {
     event.preventDefault();
     const name = nameInput.value.trim();
     if (!name) return;
 
-    list.push({ id: `${Date.now()}-${Math.random()}`, name });
-    saveStudents();
-    renderStudents();
-    form.reset();
-    nameInput.focus();
+    try {
+        const response = await fetch('/api/estudiantes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: `${Date.now()}-${Math.random()}`, name })
+        });
+        if (!response.ok) throw new Error('No se pudo guardar el estudiante.');
+
+        const savedStudent = await response.json();
+        list.push(savedStudent);
+        renderStudents();
+        form.reset();
+        nameInput.focus();
+    } catch {
+        window.alert('No se pudo guardar el estudiante en el servidor.');
+    }
 });
 
-studentList.addEventListener('click', (event) => {
+studentList.addEventListener('click', async (event) => {
     const deleteButton = event.target.closest('[data-student-id]');
     if (!deleteButton) return;
 
-    list = list.filter((student) => student.id !== deleteButton.dataset.studentId);
-    saveStudents();
-    renderStudents();
+    try {
+        const response = await fetch(`/api/estudiantes/${encodeURIComponent(deleteButton.dataset.studentId)}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) throw new Error('No se pudo eliminar el estudiante.');
+
+        list = list.filter((student) => student.id !== deleteButton.dataset.studentId);
+        renderStudents();
+    } catch {
+        window.alert('No se pudo eliminar el estudiante del servidor.');
+    }
 });
 
-renderStudents();
+loadStudents();
