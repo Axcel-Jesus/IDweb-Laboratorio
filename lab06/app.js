@@ -18,9 +18,11 @@ app.use((req, res, next) => {
     next(); // Fundamental llamar a next() para que la petición no se quede colgada
 });
 
-// --- AQUÍ CONECTAREMOS NUESTRAS RUTAS MÁS ADELANTE ---
-// const cursosRoutes = require('./routes/cursosRoutes');
-// app.use('/api/cursos', cursosRoutes);
+// Importamos las rutas
+const cursosRoutes = require('./routes/cursosRoutes');
+
+// Usamos el enrutador para el recurso de cursos
+app.use('/api/cursos', cursosRoutes);
 
 // 3. Middleware de Manejo de Errores: Captura errores y retorna un JSON con código HTTP 500
 app.use((err, req, res, next) => {
