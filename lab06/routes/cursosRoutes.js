@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 // Importamos el controlador con toda la lógica
-const cursosController = require('../controllers/cursosController');
+const cursosController = require('../controllers/cursosControllers');
 
 // Definición de endpoints (Rutas)
 router.get('/', cursosController.getAllCursos);
